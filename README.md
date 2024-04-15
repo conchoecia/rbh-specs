@@ -22,22 +22,9 @@ Every `rbh2` file must have the following columns. We recommend that these colum
 - `gene_group` - Usually used to mark an ALG.
 - `color` - Used to plot this line. Format is a hex color, like "#B07DF4". If there is no color, use black, "#000000", or nothing, "".
 
-Each sample that is present in the file has five columns. Sample names cannot have underscore characters, `_`, as this character is used to delimit the fields. Each samplename must be unique. In the example below, we use the string "sampleName" to denote one sample --- this string will be 
-- `sampleName_scaf`
-- `sampleName_gene`
-- `sampleName_strand`
-- `sampleName_start`
-- `sampleName_stop`
-
-
-```
-rbh     gene_group      color   BCnSSimakov2022_gene    BCnSSimakov2022_scaf    BCnSSimakov2022_pos
-Simakov2022BCnS_genefamily_10069        C1      #B07DF4 Simakov2022BCnS_genefamily_10069        C1      1       TWW79076.1      CM011078.1      1097092
-Simakov2022BCnS_genefamily_10079        C1      #B07DF4 Simakov2022BCnS_genefamily_10079        C1      2       TWW74641.1      CM011082.1      6561482
-Simakov2022BCnS_genefamily_1011 C1      #B07DF4 Simakov2022BCnS_genefamily_1011 C1      3       TWW57762.1      CM011075.1      6318444
-Simakov2022BCnS_genefamily_10152        C1      #B07DF4 Simakov2022BCnS_genefamily_10152        C1      4       TWW57729.1      CM011075.1      5736894
-Simakov2022BCnS_genefamily_10297        C1      #B07DF4 Simakov2022BCnS_genefamily_10297        C1      5       TWW56077.1      CM011076.1      665820
-Simakov2022BCnS_genefamily_10366        C1      #B07DF4 Simakov2022BCnS_genefamily_10366        C1      6       TWW66613.1      CM011088.1      7272376
-Simakov2022BCnS_genefamily_10467        C1      #B07DF4 Simakov2022BCnS_genefamily_10467        C1      7       TWW77815.1      CM011080.1      14814994
-Simakov2022BCnS_genefamily_10532        C1      #B07DF4 Simakov2022BCnS_genefamily_10532        C1      8       TWW57960.1      CM011075.1      9085640
-```
+Each sample that is present in the file has five columns. Sample names cannot have underscore characters, `_`, as this character is used to delimit the fields. Each samplename must be unique. In the example below, we use the string "sampleName" to denote one sample --- this string will be changed for every sample encoded in the genome.
+- `sampleName_scaf` - Contains the scaffold name (fasta header) on which this locus exists. This must be an exact match of a scaffold name fasta header found in the source genome fasta file.
+- `sampleName_gene` - If a protein, this is the fasta header of this protein fasta entry for this ortholog, and must exactly match a protein name in the fasta header. If not a protein, must have some other name unique to this column for this orthology file.
+- `sampleName_strand` - Must be '+' or '-' if the strand of the feature is known. Must be the '.' character if the strand is not known/relevant. If a protein, must be the encoding strand relative to the genome fasta file. If extracted from a .maf file, takes the strand from the alignment.
+- `sampleName_start` - The left-most position of this feature. Uses bed-format numbering conventions. From Wikipedia, this column 'chromStart' is defined as: "Start coordinate on the chromosome or scaffold for the sequence considered (the first base on the chromosome is numbered 0 i.e. the number is zero-based)". This value will always be less than the value of `sampleName_stop`.
+- `sampleName_stop` - The right-most position of this feature. Uses bed-format numbering conventions. From Wikipedia, this column 'chromEnd' is defined as: "End coordinate on the chromosome or scaffold for the sequence considered. This position is non-inclusive, unlike chromStart (the first base on the chromosome is numbered 1 i.e. the number is one-based)." This value will always be greater than the value of `sampleName_start`.
